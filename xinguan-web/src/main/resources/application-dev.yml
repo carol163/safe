@@ -45,3 +45,8 @@ fdfs:
   pool:
     max-total: 500
     max-wait-millis: 2000
+alioss:
+  endpoint: oss-cn-beijing.aliyuncs.com
+  accessKeyId: LTAI4GBgYzdwbvYytAqj18Lh
+  accessKeySecret: rugkelOstrBXajSbtthcq0z6geVXaj
+  bucketName: xinguanwo-parent

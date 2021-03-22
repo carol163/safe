@@ -5,6 +5,7 @@ import com.coderman.common.error.SystemException;
 import com.coderman.common.model.system.ImageAttachment;
 import com.coderman.common.response.ResponseBean;
 import com.coderman.common.vo.system.ImageAttachmentVO;
+import com.coderman.system.service.AliOssService;
 import com.coderman.system.service.UploadService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -26,7 +27,7 @@ import java.util.List;
  * @Version 1.0
  **/
 @Slf4j
-@Api(tags = "系统模块-文件上传相关接口")
+@Api(tags = "系统模块-图片上传相关接口")
 @RestController
 @RequestMapping("/system/upload")
 public class UploadController {
@@ -41,12 +42,22 @@ public class UploadController {
      * @param file
      * @return
      */
-    @ApiOperation(value = "上传文件")
+//    @ApiOperation(value = "上传文件")
+//    @RequiresPermissions({"upload:image"})
+//    @PostMapping("/image")
+//    public ResponseBean<String> uploadImage(MultipartFile file) throws IOException, SystemException {
+//        String realPath=uploadService.uploadImage(file);
+//        return ResponseBean.success(realPath);
+//    }
+    @Autowired
+    private AliOssService aliOssService;
+
+    @ApiOperation(value = "上传Oss图片文件")
     @RequiresPermissions({"upload:image"})
     @PostMapping("/image")
-    public ResponseBean<String> uploadImage(MultipartFile file) throws IOException, SystemException {
-        String realPath=uploadService.uploadImage(file);
-        return ResponseBean.success(realPath);
+    public ResponseBean<String> uploadImgFile(MultipartFile file)throws IOException, SystemException {
+        String s = aliOssService.upload(file);
+        return ResponseBean.success(s);
     }
 
 

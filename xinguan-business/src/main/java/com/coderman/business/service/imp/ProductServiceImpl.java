@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
+import com.coderman.system.service.AliOssService;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -39,6 +40,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductStockMapper productStockMapper;
+
+    @Autowired
+    private AliOssService aliOssService;
 
 
 
@@ -102,6 +106,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void add(ProductVO ProductVO) {
         Product product = new Product();
+
         BeanUtils.copyProperties(ProductVO,product);
         product.setCreateTime(new Date());
         product.setModifiedTime(new Date());
@@ -111,6 +116,7 @@ public class ProductServiceImpl implements ProductService {
             product.setTwoCategoryId(categoryKeys[1]);
             product.setThreeCategoryId(categoryKeys[2]);
         }
+        //product.setImageUrl(aliOssService.upload());
         product.setStatus(2);//未审核
         product.setPNum(UUID.randomUUID().toString().substring(0,32));
         productMapper.insert(product);
