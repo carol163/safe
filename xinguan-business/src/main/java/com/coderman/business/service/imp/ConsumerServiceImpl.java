@@ -60,12 +60,13 @@ public class ConsumerServiceImpl implements ConsumerService {
 
     /**
      * 添加供应商
-     * @param ConsumerVO
+     * @param consumerVO
+     * @return
      */
     @Override
-    public Consumer add(ConsumerVO ConsumerVO) {
+    public Consumer add(ConsumerVO consumerVO) {
         Consumer consumer = new Consumer();
-        BeanUtils.copyProperties(ConsumerVO,consumer);
+        BeanUtils.copyProperties(consumerVO,consumer);
         consumer.setCreateTime(new Date());
         consumer.setModifiedTime(new Date());
         consumerMapper.insert(consumer);
