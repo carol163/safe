@@ -31,4 +31,9 @@ public interface HealthService {
      * @return
      */
     PageVO<Health> history(Long id, Integer pageNum, Integer pageSize);
+    /**
+     * 健康上报
+     * @param healthVO
+     */
+    PageVO<Health> findHealthList(Integer pageNum, Integer pageSize, HealthVO healthVO);
 }

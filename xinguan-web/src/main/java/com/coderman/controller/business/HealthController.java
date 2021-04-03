@@ -6,6 +6,7 @@ import com.coderman.common.error.BusinessException;
 import com.coderman.common.model.business.Health;
 import com.coderman.common.response.ActiveUser;
 import com.coderman.common.response.ResponseBean;
+import com.coderman.common.vo.business.ConsumerVO;
 import com.coderman.common.vo.business.HealthVO;
 import com.coderman.common.vo.system.PageVO;
 import io.swagger.annotations.Api;
@@ -69,6 +70,19 @@ public class HealthController {
         ActiveUser activeUser = (ActiveUser) SecurityUtils.getSubject().getPrincipal();
         Health report = healthService.isReport(activeUser.getUser().getId());
         return ResponseBean.success(report);
+    }
+    /**
+     * 健康上报列表
+     *
+     * @return
+     */
+    @ApiOperation(value = "健康上报列表",notes = "用户健康上报列表历史记录")
+    @GetMapping("/securities")
+    public ResponseBean securities(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                         @RequestParam(value = "pageSize") Integer pageSize,
+                                         HealthVO healthVO) {
+        PageVO<Health> healthVOPageVO = healthService.findHealthList(pageNum, pageSize, healthVO);
+        return ResponseBean.success(healthVOPageVO);
     }
 
 }
