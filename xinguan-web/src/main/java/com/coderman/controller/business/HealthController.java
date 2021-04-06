@@ -8,6 +8,7 @@ import com.coderman.common.response.ActiveUser;
 import com.coderman.common.response.ResponseBean;
 import com.coderman.common.vo.business.ConsumerVO;
 import com.coderman.common.vo.business.HealthVO;
+import com.coderman.common.vo.business.ProductVO;
 import com.coderman.common.vo.system.PageVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -83,6 +84,20 @@ public class HealthController {
                                          HealthVO healthVO) {
         PageVO<Health> healthVOPageVO = healthService.findHealthList(pageNum, pageSize, healthVO);
         return ResponseBean.success(healthVOPageVO);
+    }
+
+    /**
+     * 编辑上报状态
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "编辑上报状态", notes = "编辑上报状态信息")
+    @RequiresPermissions({"health:edit"})
+    @ControllerEndpoint(exceptionMessage = "更改状态失败", operation = "处理")
+    @PutMapping("/edit/{id}")
+    public ResponseBean edit(@PathVariable Long id) throws BusinessException {
+        healthService.edit(id);
+        return ResponseBean.success();
     }
 
 }

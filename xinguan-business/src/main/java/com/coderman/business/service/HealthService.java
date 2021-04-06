@@ -36,4 +36,9 @@ public interface HealthService {
      * @param healthVO
      */
     PageVO<Health> findHealthList(Integer pageNum, Integer pageSize, HealthVO healthVO);
+    /**
+     * 编辑上报状态
+     * @param id
+     */
+    void edit(Long id) throws BusinessException;
 }

@@ -23,6 +23,8 @@ public class HealthVO {
 
     private Long userId;
 
+    private String username;
+
     @NotNull(message = "当前情况不能为空")
     private Integer situation;
 
@@ -34,6 +36,8 @@ public class HealthVO {
 
     @NotNull(message = "是否招待不能为空")
     private Integer reception;
+
+    private String massage;
 
     private Date createTime;
 

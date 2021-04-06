@@ -1,13 +1,11 @@
 package com.coderman.business.service.imp;
 
-import com.coderman.business.converter.ConsumerConverter;
 import com.coderman.business.mapper.HealthMapper;
 import com.coderman.business.service.HealthService;
 import com.coderman.common.error.BusinessCodeEnum;
 import com.coderman.common.error.BusinessException;
-import com.coderman.common.model.business.Consumer;
 import com.coderman.common.model.business.Health;
-import com.coderman.common.vo.business.ConsumerVO;
+import com.coderman.common.model.business.Product;
 import com.coderman.common.vo.business.HealthVO;
 import com.coderman.common.vo.system.PageVO;
 import com.github.pagehelper.PageHelper;
@@ -53,6 +51,9 @@ public class HealthServiceImpl implements HealthService {
         }
         if (healthVO.getId() != null && !"".equals(healthVO.getId())) {
             criteria.andLike("userId", "%" + healthVO.getId() + "%");
+        }
+        if (healthVO.getUsername() != null && !"".equals(healthVO.getUsername())) {
+            criteria.andLike("username", "%" + healthVO.getUsername() + "%");
         }
         if (healthVO.getAddress() != null && !"".equals(healthVO.getAddress())) {
             criteria.andLike("address", "%" + healthVO.getAddress() + "%");
@@ -117,5 +118,24 @@ public class HealthServiceImpl implements HealthService {
         List<Health> health = healthMapper.selectByExample(o);
         PageInfo<Health> pageInfo=new PageInfo<>(health);
         return new PageVO<>(pageInfo.getTotal(),pageInfo.getList());
+    }
+    /**
+     * 编辑商品
+     * @param id
+     */
+    @Override
+    public void edit(Long id) throws BusinessException {
+        Health health = healthMapper.selectByPrimaryKey(id);
+        if (health.getSituation() != 2) {
+            throw new BusinessException(BusinessCodeEnum.PRODUCT_STATUS_ERROR);
+        } else {
+           // throw new BusinessException(BusinessCodeEnum.SIGNATURE_NOT_MATCH);
+//            health.setSituation(8);
+//            health.setPassby(3);
+//            health.setAddress("北区/实验楼A/二楼/实验室-2/xiaoge/wu");
+            //healthMapper.updateByPrimaryKeySelective(t);
+            health.setSituation(0);
+            healthMapper.updateByPrimaryKeySelective(health);
+        }
     }
 }
