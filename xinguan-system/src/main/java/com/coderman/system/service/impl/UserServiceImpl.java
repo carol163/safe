@@ -152,10 +152,13 @@ public class UserServiceImpl implements UserService {
         List<Menu> menus=null;
         List<MenuNodeVO> menuNodeVOS=new ArrayList<>();
         ActiveUser activeUser = (ActiveUser) SecurityUtils.getSubject().getPrincipal();
+        //超级管理员
         if(activeUser.getUser().getType()== UserTypeEnum.SYSTEM_ADMIN.getTypeCode()){
             //超级管理员
             menus=menuMapper.selectAll();
-        }else if(activeUser.getUser().getType()== UserTypeEnum.SYSTEM_USER.getTypeCode()){
+        }
+        //普通系统用户
+        else if(activeUser.getUser().getType()== UserTypeEnum.SYSTEM_USER.getTypeCode()){
             //普通系统用户
             menus= activeUser.getMenus();
         }
@@ -274,8 +277,10 @@ public class UserServiceImpl implements UserService {
         }
         User user = new User();
         BeanUtils.copyProperties(userVO,user);
+        //盐值
         String salt=UUID.randomUUID().toString().substring(0,32);
         user.setPassword(MD5Utils.md5Encryption(user.getPassword(), salt));
+        //没有设置创建时间和更新时间  使用mybatis-plus的自动填充功能实现
         user.setModifiedTime(new Date());
         user.setCreateTime(new Date());
         user.setSalt(salt);
