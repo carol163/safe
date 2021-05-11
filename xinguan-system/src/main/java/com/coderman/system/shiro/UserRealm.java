@@ -78,28 +78,25 @@ public class UserRealm extends AuthorizingRealm {
         String token = (String) auth.getCredentials();
         // 解密获得username，用于和数据库进行对比
         String username = JWTUtils.getUsername(token);
-
+        // 用户名为空
         if (username == null) {
             throw new AuthenticationException(" token错误，请重新登入！");
         }
-
+        // 根据用户名获取用户
         User userBean = userService.findUserByName(username);
-
         if (userBean == null) {
             throw new AccountException("账号不存在!");
-        }
+        }// 用户不存在
         if(JWTUtils.isExpire(token)){
             throw new AuthenticationException(" token过期，请重新登入！");
-        }
-
+        }// token过期
+        // 用户名和密码不匹配
         if (! JWTUtils.verify(token, username, userBean.getPassword())) {
             throw new CredentialsException("密码错误!");
         }
-
         if(userBean.getStatus()==0){
             throw new LockedAccountException("账号已被锁定!");
-        }
-
+        }// 账户被锁定
         //如果验证通过，获取用户的角色
         List<Role> roles= userService.findRolesById(userBean.getId());
         //查询用户的所有菜单(包括了菜单和按钮)
@@ -111,9 +108,11 @@ public class UserRealm extends AuthorizingRealm {
             for (Menu menu : menus) {
                 String url = menu.getUrl();
                 String per = menu.getPerms();
+                //为菜单
                 if(menu.getType()==0&& !StringUtils.isEmpty(url)){
                     urls.add(menu.getUrl());
                 }
+                //为按钮
                 if(menu.getType()==1&&!StringUtils.isEmpty(per)){
                     perms.add(menu.getPerms());
                 }

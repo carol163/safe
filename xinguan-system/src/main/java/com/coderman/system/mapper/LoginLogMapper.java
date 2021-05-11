@@ -3,6 +3,7 @@ package com.coderman.system.mapper;
 
 import com.coderman.common.model.system.LoginLog;
 import com.coderman.common.vo.system.UserVO;
+import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Map;
  * @Date 2020/3/20 19:09
  * @Version 1.0
  **/
+@Repository
 public interface LoginLogMapper extends Mapper<LoginLog> {
 
     /**

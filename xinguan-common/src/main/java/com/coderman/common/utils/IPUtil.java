@@ -16,6 +16,7 @@ public class IPUtil {
 	 * X-Forwarded-For中第一个非 unknown的有效IP字符串，则为真实IP地址
 	 */
 	public static String getIpAddr(HttpServletRequest request) {
+
 		String ip = request.getHeader("x-forwarded-for");
 		if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
 			ip = request.getHeader("Proxy-Client-IP");
