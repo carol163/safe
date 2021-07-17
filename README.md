@@ -56,3 +56,4 @@ SpringBoot, Shiro ,Swagger-UI,mybatis,JWT,Mysql,通用mapper,Vue.js+element-ui,F
 ### QQ交流群: 830790908
 
 
+"# safe" 
